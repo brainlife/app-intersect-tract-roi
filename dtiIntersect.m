@@ -35,7 +35,7 @@ original_classification = classification;
 
 % parse and create ROIs
 roiName =  config.roi_name
-dtiRoiFromNifti(fullfile(config.rois,sprintf('%s.nii.gz',config.roiName)),[],fullfile(topdir,'intersect_roi'),'.mat');
+dtiRoiFromNifti(fullfile(config.rois,sprintf('%s.nii.gz',roiName)),[],fullfile(topdir,'intersect_roi'),'.mat');
 
 roi = load('intersect_roi.mat');
 
