@@ -1,0 +1,7 @@
+{
+	"tck":	"./test/track/track.tck",
+	"rois":	"./test/rois/rois/",
+	"roiName":	"lh.L.Pros_dors_125.label_clean lh.L.Pros_vent_125.label_clean",	
+	"wmc":	"./test/wmc/classification.mat",
+	"intersect_type":	"and"
+}

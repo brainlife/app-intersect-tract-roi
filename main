@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=8,vmem=32gb,walltime=2:00:00
+#PBS -N app-intersect-tract-roi
+
+# intersect tracks with roi
+echo "intersecting tracks with roi"
+time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/dtiIntersect
+
+# cleanup
+mv output.mat ./wmc/classification.mat
+mv tracts ./wmc/
+mv output_fibercounts.txt ./wmc/
+
+# error check
+if [ -f ./wmc/classification.mat ]; then
+    rm -rf *.mat
+    exit 0
+else
+    echo "failed"
+    exit 1
+fi
