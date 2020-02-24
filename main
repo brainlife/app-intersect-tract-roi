@@ -8,7 +8,7 @@ time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compile
 
 # cleanup
 mv output.mat ./wmc/classification.mat
-mv tracts ./wmc/
+mv ./tracts ./wmc/
 mv output_fibercounts.txt ./wmc/
 
 # error check
