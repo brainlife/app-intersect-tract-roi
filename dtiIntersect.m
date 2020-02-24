@@ -21,6 +21,10 @@ end
 % Set top directory
 topdir = pwd;
 
+% make outdir
+outdir = fullfile(pwd,'wmc');
+mkdir(outdir);
+
 % Load and parse configuration file
 config = loadjson('config.json');
 intersect_type = config.intersect_type;
@@ -30,13 +34,13 @@ load(config.wmc)
 original_classification = classification;
 
 % parse and create ROIs
-roiName =  config.roiName
+roiName =  config.roi_name
 dtiRoiFromNifti(fullfile(config.rois,sprintf('%s.nii.gz',config.roiName)),[],fullfile(topdir,'intersect_roi'),'.mat');
 
 roi = load('intersect_roi.mat');
 
 % load tck
-wbFG = fgRead(config.tck);
+wbFG = fgRead(config.track);
 
 % intersect
 for ifg = 1:length(original_classification.names)
@@ -45,12 +49,15 @@ for ifg = 1:length(original_classification.names)
     	display(sprintf('%s',tractFG.name))
 	indexes = find(original_classification.index == ifg);
 	tractFG.fibers = wbFG.fibers(indexes);
-	[~,~,keep] = dtiIntersectFibersWithRoi([],{intersect_type},1,roi.roi,tractFG);
+	[~,~,keep] = dtiIntersectFibersWithRoi([],{intersect_type},config.minimum_distance,roi.roi,tractFG);
 	classification.index(indexes(~keep)) = 0;
 end
 
 % make fg_classified structure
 fg_classified = bsc_makeFGsFromClassification_v4(classification,wbFG);
+
+%% Save output
+save('output.mat','classification','fg_classified','-v7.3');
 
 %% create tracts for json structures for visualization
 tracts = fg2Array(fg_classified);
