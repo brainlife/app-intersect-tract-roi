@@ -2,7 +2,7 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.34-blue.svg)](https://doi.org/10.25663/bl.app.34)
 
 # app-intersect-tract-roi
-This app will perform ensemble tracking between 2 or more cortical regions of interest (ROIs) from either a freesurfer parcellation or an atlas parcellation. First, the ROIs are registered to diffusion space using Freesurfer's mri_label2vol, and a white matter mask is generated in diffusion space, by running the create_wm_mask script. Then, tracking will be performed using mrtrix/0.2.12 by running the trackROI2ROI script. Finally, a classification structure will be generated using Vistasoft's bsc_mergeFGandClass and bsc_makeFGsFromClassification functions by running the classificationGenerator script.
+This app will intersect chosen tract with the selected (ROI/ROIs) from either a freesurfer parcellation, atlas parcellation or uploaded ROI. ROIs will are transformed to vistasoft compatible format. You can specify the minimum distance between the ROI and tract to assign it to the intersected group (default 0.87). The output will be a new tract file that traverses through the selected ROI. App can work in two modes "and" selecting the fibers passing throught the ROI and "not" selecting only the fibers that are not passing through the ROI
 
 ### Authors
 - Brad Caron (bacaron@iu.edu)
@@ -29,16 +29,10 @@ You can submit this App online at [https://doi.org/10.25663/brainlife.app.282](h
 
 ```json
 {
-        "parcellation": "./input/parc/",
-        "dtiinit": "./input/dtiinit/",
-        "fsurfer": "./input/freesurfer/",
-        "roiPair": "45,54",      
-        "num_fibers": 500000,
-        "max_num": 1000000,
-        "stepsize": 0.2,
-        "minlength": 10,
-        "maxlength": 200,
-        "num_repetitions": 1
+        "rois": "./input/rois/",
+        "wma": "./input/wma/",
+        "tractk/tck": "./input/tract/",
+        "intersect_type": "and/not",      
 }
 ```
 
@@ -65,7 +59,7 @@ bl dataset download 5b96bc8d059cf900271924f5 && mv 5b96bc8d059cf900271924f5 inpu
 
 ## Output
 
-The main outputs of this App is a 'track.tck' file, a folder called 'tracts' containing .json files for each tract, an 'output.mat' containing the classification structure, and a text file called 'output_fibercounts.txt' which contains information regarding the number of streamlines in each tract.
+The main outputs of this App is a 'track.tck' file, a folder called 'wma' containing selectect fibers accordingly to the and/not parameter
 
 #### Product.json
 The secondary output of this app is `product.json`. This file allows web interfaces, DB and API calls on the results of the processing. 
