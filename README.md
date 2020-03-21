@@ -32,7 +32,9 @@ You can submit this App online at [https://doi.org/10.25663/brainlife.app.282](h
         "rois": "./input/rois/",
         "wma": "./input/wma/",
         "tractk/tck": "./input/tract/",
-        "intersect_type": "and/not",      
+        "intersect_type": "and/not",     
+        "minimum_distance": "0.87",      
+
 }
 ```
 
@@ -59,7 +61,7 @@ bl dataset download 5b96bc8d059cf900271924f5 && mv 5b96bc8d059cf900271924f5 inpu
 
 ## Output
 
-The main outputs of this App is a 'track.tck' file, a folder called 'wma' containing selectect fibers accordingly to the and/not parameter
+The main outputs of this App is a 'wma' file containing selectect fibers accordingly to the and/not parameter
 
 #### Product.json
 The secondary output of this app is `product.json`. This file allows web interfaces, DB and API calls on the results of the processing. 
