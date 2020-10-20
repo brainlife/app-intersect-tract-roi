@@ -1,5 +1,5 @@
 [![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/soichih/abcd-spec)
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.34-blue.svg)](https://doi.org/10.25663/brainlife.app.282)
+[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.282-blue.svg)](https://doi.org/10.25663/brainlife.app.282)
 
 # app-intersect-tract-roi
 This app will intersect chosen tract with the selected ROI from either a freesurfer parcellation, atlas parcellation or uploaded ROI. ROIs will are transformed to vistasoft compatible format. You can specify the minimum distance between the ROI and tract to assign it to the intersected group (default 0.87). The output will be a new tract file that traverses through the selected ROI. App can work in two modes "and" selecting the fibers passing throught the ROI and "not" selecting only the fibers that are not passing through the ROI
