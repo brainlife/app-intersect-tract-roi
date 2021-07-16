@@ -38,7 +38,7 @@ do
 			roi_string=${tmparray}
 		fi
 
-		if [[  ${intersect} == 'not' ]]; then
+		if [[  ${intersect_options[$it]} == 'not' ]]; then
 			inv_line='-inverse'
 			out_name="./tmp/${tracks[$it]%%.tck}_not_${roi_string}.tck"
 		else
