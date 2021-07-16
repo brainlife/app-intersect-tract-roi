@@ -12,13 +12,13 @@ if [ ! -f track/track.tck ]; then
 	time singularity exec -e docker://brainlife/mrtrix3:3.0_RC3 ./segment_tracks.sh
 fi
 
-if [ ! -f ./wmc/classification.mat ]; then
-	time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/classificationGenerator
-fi
-
-if [ ! -f ./wmc/surfaces/index.json ]; then
-	time singularity exec -e docker://brainlife/pythonvtk:1.1 ./rois2vtks.py
-fi
+#if [ ! -f ./wmc/classification.mat ]; then
+#	time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/classificationGenerator
+#fi
+#
+#if [ ! -f ./wmc/surfaces/index.json ]; then
+#	time singularity exec -e docker://brainlife/pythonvtk:1.1 ./rois2vtks.py
+#fi
 
 #if [ -f ./wmc/classification.mat ]; then
 #    mv *track*.txt track*.tck ./raw/
