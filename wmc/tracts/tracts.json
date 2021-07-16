@@ -1,0 +1,20 @@
+[
+    {
+        "name": "track_1_freesurfer-11102_freesurfer-11121",
+        "color": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "filename": "1.json"
+    },
+    {
+        "name": "track_2_freesurfer-12161",
+        "color": [
+            0.03660392156862745,
+            0.0,
+            0.04182745098039216
+        ],
+        "filename": "2.json"
+    }
+]
