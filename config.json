@@ -1,9 +1,0 @@
-{
-	"reference_anatomy":	"/home/brad/Desktop/wmctest/dwi.nii.gz",
-	"track_path":	"/home/brad/Desktop/wmctest/track.tck",
-	"rois":	"/home/brad/Desktop/wmctest/rois/",
-	"roiNames":	"freesurfer-11102 freesurfer-11121\nfreesurfer-12161",	
-	"classification_path":	"/home/brad/Desktop/wmctest/classification.mat",
-	"intersect_type":	"and and",
-	"minimum_distance":	0.87
-}
