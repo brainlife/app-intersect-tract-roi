@@ -2,23 +2,30 @@
 #PBS -l nodes=1:ppn=8,vmem=32gb,walltime=0:30:00
 #PBS -N app-intersect-tract-roi
 
-roiName=`jq -r '.roi_name' config.json`
+tracks=(`ls track*.tck`)
 
-# intersect tracks with roi
-echo "intersecting tracks with roi"
-time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/dtiIntersect
-
-# cleanup
-mv output.mat ./wmc/classification.mat
-mv ./tracts ./wmc/
-mv output_fibercounts.txt ./wmc/
-
-# error check
-if [ -f ./wmc/classification.mat ]; then
-    product="\"wmc\": {\"meta\": {\"ROI\", \"$roiName\"}, \"tags\": [ \"roi-$roiName\" ]},"
-    rm -rf *.mat
-    exit 0
-else
-    echo "failed"
-    exit 1
+if [ ${#tracks[@]} -eq 0 ]; then
+	time singularity exec -e docker://brainlife/dipy:1.4.0 ./generateIndividualTcks.py
 fi
+
+if [ ! -f track/track.tck ]; then
+	time singularity exec -e docker://brainlife/mrtrix3:3.0_RC3 ./segment_tracks.sh
+fi
+
+if [ ! -f ./wmc/classification.mat ]; then
+	time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/classificationGenerator
+fi
+
+if [ ! -f ./wmc/surfaces/index.json ]; then
+	time singularity exec -e docker://brainlife/pythonvtk:1.1 ./rois2vtks.py
+fi
+
+#if [ -f ./wmc/classification.mat ]; then
+#    mv *track*.txt track*.tck ./raw/
+#    echo "complete"
+#    exit 0
+#else
+#    echo "tracking failed"
+#    exit 1
+#fi
+#
