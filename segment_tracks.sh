@@ -14,7 +14,7 @@ endpoints_only=`jq -r '.endpoints_only' config.json`
 rois=`jq -r '.rois' config.json`
 
 # need to set this as a multiline array
-intersect_options=($intersectOptions)
+intersect_options=($intersect_options)
 
 # identify the parent tracks
 tracks=(`ls *track*.tck`)
