@@ -44,7 +44,7 @@ for i in range(len(streamlines)):
 
 # create json structure
 for i in range(len(tg)):
-    color = list(cm.nipy_spectral(i+1))[0:3]
+    color = list(cm.nipy_PuOr(i+1))[0:3]
     count = len(tg[i].streamlines)
     jsonfibers = streamlines[[f for f in range(len(streamline_index)) if streamline_index[f] == i+1]]
     outfibers = []
