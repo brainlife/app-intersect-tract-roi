@@ -18,7 +18,11 @@ with open('config.json') as config_f:
 reference_anat = nib.load(ref)
 
 # identify tracks
-tracks = glob.glob('*.tck')
+with open('track_names.txt','r') as track_names_f:
+    tracks = track_names_f.read()
+
+tracks = tracks.split(' ')
+tracks = [ f.replace('\n','') for f in tracks ]
 track_names = np.array([ f.replace('.tck','') for f in tracks ],dtype=object)
 
 # load tractogram and extract streamlines
@@ -40,12 +44,12 @@ for i in range(len(streamlines)):
 
 # create json structure
 for i in range(len(tg)):
-    color = list(cm.nipy_spectral(i))[0:3]
+    color = list(cm.nipy_spectral(i+1))[0:3]
     count = len(tg[i].streamlines)
     jsonfibers = streamlines[[f for f in range(len(streamline_index)) if streamline_index[f] == i+1]]
-    outfibers = {}
+    outfibers = []
     for j in range(len(jsonfibers)):
-        outfibers[j] = np.transpose(jsonfibers[j]).tolist()
+        outfibers.append(np.transpose(jsonfibers[j]).tolist())
 
     with open ('wmc/tracts/'+str(i+1)+'.json', 'w') as outfile:
         jsonfile = {'name': track_names[i], 'color': color, 'coords': outfibers}
