@@ -76,10 +76,10 @@ do
 
 			roi_path="${rois}/ROI${tmparray[$j]}.nii.gz"
 
-			tckedit ${tmptrack%%.tck}.tck ${reg_line} ${roi_path} ${inv_line} ${endpoint_line} ${out_name}.tck
+			[ ! -f ${out_name}.tck ] && tckedit ${tmptrack%%.tck}.tck ${reg_line} ${roi_path} ${inv_line} ${endpoint_line} ${out_name}.tck
 
 			if [[ ${j} -gt 0 ]]; then
-				rm -rf ${tmptrack}.tck
+				[ -f ${tmptrack}.tck ] && rm -rf ${tmptrack}.tck
 			fi
 
 			filelist+=("${out_name}")
@@ -88,14 +88,17 @@ do
 		roi_path="${rois}/ROI${tmparray}.nii.gz"
 		out_name="./tmp/wholebrain_roioptions_${reg_string}_inverseoptions_${inv_string}_rois_${tmparray}.tck"
 
-		tckedit ${track} ${reg_line} ${roi_path} ${inv_line} ${endpoint_line} ${out_name}
+		[ ! -f ${out_name} ] && tckedit ${track} ${reg_line} ${roi_path} ${inv_line} ${endpoint_line} ${out_name}
 	fi
 done
 
 # remove parent tracks, move segmented tracks to pwd and remove tmp dir
 # rm -rf `echo ${tracks[*]}`
-mv tmp/* ./
-rm -rf tmp
+ 
+if [ "$(ls -A ./tmp)" ]; then
+	mv tmp/* ./
+	rm -rf tmp
+fi
 
 # identify all the tracks with non-zero streamline counts. remove those who have zero streamlines. this will make wmc generation much easier
 tracks=`ls *.tck`
@@ -110,14 +113,14 @@ done
 
 # merge final tcks into single tck
 tcks=`ls *wholebrain*.tck`
-tckedit ${tcks} ./track/track.tck
-echo ${tcks} >> track_names.txt
+[ ! -f ./track/track.tck ] && tckedit ${tcks} ./track/track.tck
+[ ! -f ./track_names.txt ] && echo ${tcks} >> track_names.txt
 
 # final check to make sure the final tck was made. if not will exit here
 if [ ! -f ./track/track.tck ]; then
 	echo "something went wrong. check derivatives and logs"
-	# exit 1
+	exit 1
 else
 	echo "segmentation complete. creating wmc structure"
-	# exit 0
+	exit 0
 fi
