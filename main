@@ -17,7 +17,7 @@ if [ ! -f ./wmc/surfaces/index.json ]; then
 fi
 
 if [ -f ./wmc/classification.mat ]; then
-    mv *track*.txt track*.tck ./raw/
+    mv *track*.txt wholebrain*.tck ./raw/
     echo "complete"
     exit 0
 else
