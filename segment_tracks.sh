@@ -96,6 +96,7 @@ done
 # rm -rf `echo ${tracks[*]}`
  
 if [ "$(ls -A ./tmp)" ]; then
+	echo "moving files"
 	mv tmp/* ./
 	rm -rf tmp
 fi
