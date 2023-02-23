@@ -73,8 +73,11 @@ do
 				tmptrack=${filelist[$j-1]}
 				out_name="${filelist[$j-1]}_${tmparray[$j]}"
 			fi
-
-			roi_path="${rois}/ROI${tmparray[$j]}.nii.gz"
+			if [ ! -f ${rois}/ROI${tmparray[$j]}.nii.gz ]; then
+				roi_path="${rois}/${tmparray[$j]}.nii.gz"
+			else
+				roi_path="${rois}/ROI${tmparray[$j]}.nii.gz"
+			fi
 
 			[ ! -f ${out_name}.tck ] && tckedit ${tmptrack%%.tck}.tck ${reg_line} ${roi_path} ${inv_line} ${endpoint_line} ${out_name}.tck
 
@@ -85,7 +88,11 @@ do
 			filelist+=("${out_name}")
 		done
 	else
-		roi_path="${rois}/ROI${tmparray}.nii.gz"
+		if [ ! -f ${rois}/ROI${tmparray}.nii.gz ]; then
+			roi_path="${rois}/${tmparray}.nii.gz"
+		else
+			roi_path="${rois}/ROI${tmparray}.nii.gz"
+		fi
 		out_name="./tmp/wholebrain_roioptions_${reg_string}_inverseoptions_${inv_string}_rois_${tmparray}.tck"
 
 		[ ! -f ${out_name} ] && tckedit ${track} ${reg_line} ${roi_path} ${inv_line} ${endpoint_line} ${out_name}
