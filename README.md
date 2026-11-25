@@ -10,9 +10,9 @@
   <a href="https://github.com/brainlife/app-intersect-tract-roi/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
 </p>
 
-> 📍 **This branch, `v1.1`, is the brainlife.io App Segment Tracts with ROIs** ([doi:10.25663/brainlife.app.282](https://doi.org/10.25663/brainlife.app.282)). The other Apps in this repository are listed under **Versions on brainlife.io** below.
+> **This branch, `v1.1`, is the brainlife.io App Segment Tracts with ROIs** ([doi:10.25663/brainlife.app.282](https://doi.org/10.25663/brainlife.app.282)). The other Apps in this repository are listed under **Versions on brainlife.io** below.
 
-## 🧠 At a glance
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -22,13 +22,13 @@ Splits each tract of the input classification into its own .tck, then for each l
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/track/tck` · `neuro/wmc` · `neuro/rois` · `neuro/dwi` |
-| 📤 **Outputs** | `neuro/track/tck` · `neuro/wmc` · `raw` |
-| 🐳 **Container** | `brainlife/dipy:1.4.0` |
-| ⚙️ **Resources** | 8 CPUs · 32 GB memory · 0.5 h walltime |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.282](https://doi.org/10.25663/brainlife.app.282) |
+| **Inputs** | `neuro/track/tck` · `neuro/wmc` · `neuro/rois` · `neuro/dwi` |
+| **Outputs** | `neuro/track/tck` · `neuro/wmc` · `raw` |
+| **Container** | `brainlife/dipy:1.4.0` |
+| **Resources** | 8 CPUs · 32 GB memory · 0.5 h walltime |
+| **Run it** | [doi.org/10.25663/brainlife.app.282](https://doi.org/10.25663/brainlife.app.282) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
@@ -37,7 +37,7 @@ Splits each tract of the input classification into its own .tck, then for each l
 | `rois` | `neuro/rois` | yes | The path to the rois datatype. Must be in the same space as the tractogram. |
 | `dwi` | `neuro/dwi` | yes | DWI image used only as the reference anatomy for loading and saving streamlines. |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
@@ -46,7 +46,7 @@ Splits each tract of the input classification into its own .tck, then for each l
 | `raw` | `raw` | Intermediate per-tract .tck files and track name lists. |
 
 <details>
-<summary><b>⚙️ Parameters</b> (4)</summary>
+<summary><b>Parameters</b> (4)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -59,7 +59,7 @@ Splits each tract of the input classification into its own .tck, then for each l
 
 <!-- brainlife-app:end -->
 
-## 🏷️ Versions on brainlife.io
+## Versions on brainlife.io
 
 Each App is built from its own branch of this repository.
 
@@ -71,7 +71,7 @@ Each App is built from its own branch of this repository.
 
 The deprecated App intersected a chosen tract with one ROI in vistasoft format, in `and` mode (keep the streamlines that pass through the ROI) or `not` mode (keep those that do not), with a minimum distance between ROI and streamline (default 0.87).
 
-## 🔬 How it works
+## How it works
 
 The current Apps use MRtrix3 `tckedit`. Each line of `roiNames` defines one new tract:
 
@@ -91,13 +91,13 @@ freesurfer_occipital_R                      include
 
 Tracts with no streamlines left are dropped, and the rest are merged into one tractogram and a new classification with one tract per line. The *Segment Tracts with ROIs* App first splits each tract of the input classification into its own `.tck` and applies the ROI lines to each one. The ROIs must be in the same space as the tractogram.
 
-## 🚀 Running the App
+## Running the App
 
-### ☁️ On brainlife.io
+### On brainlife.io
 
 Open the App at [doi.org/10.25663/brainlife.app.556](https://doi.org/10.25663/brainlife.app.556) and choose a `neuro/track/tck` tractogram, a `neuro/rois` dataset and a `neuro/dwi` dataset (used only as the reference anatomy); the *Segment Tracts with ROIs* App also takes the `neuro/wmc` classification of the tractogram. Enter `roiNames` and `intersect_type` and press **Execute**. The App writes a new tractogram (`neuro/track/tck`) and classification (`neuro/wmc`), both tagged `intersected`, and a `raw` dataset with the intermediate files.
 
-### 💻 Locally
+### Locally
 
 You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqlang.github.io/jq/). `main` runs the steps in the `brainlife/mrtrix3:3.0_RC3`, `brainlife/dipy:1.4.0` and `brainlife/pythonvtk:1.1` containers.
 
@@ -124,7 +124,7 @@ You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqla
    ./main
    ```
 
-### 🧪 Sample data
+### Sample data
 
 Download sample ROIs and a classification from brainlife.io with the [brainlife CLI](https://github.com/brainlife/cli):
 
@@ -136,7 +136,7 @@ bl dataset download 5b96bc8b059cf900271924f4 && mv 5b96bc8b059cf900271924f4 inpu
 bl dataset download 5b96bc8d059cf900271924f5 && mv 5b96bc8d059cf900271924f5 input/wma
 ```
 
-## 📦 Outputs
+## Outputs
 
 ```text
 track/
@@ -148,11 +148,11 @@ wmc/
 raw/                       per-tract .tck files and track name lists
 ```
 
-## 🩺 Troubleshooting
+## Troubleshooting
 
 - **`something went wrong. check derivatives and logs`**: no streamlines survived the ROI filtering, so no tractogram was written. Check the ROI names, `intersect_type` and `endpoints_only`, and make sure the ROIs overlap the tracts.
 
-## 📚 Citing
+## Citing
 
 > [!TIP]
 > If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
@@ -165,7 +165,7 @@ raw/                       per-tract .tck files and track name lists
 - Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 - Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. *Scientific Data* 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
-## 👥 Authors
+## Authors
 
 - Franco Pestilli (project director)
 - Brad Caron
@@ -173,7 +173,7 @@ raw/                       per-tract .tck files and track name lists
 
 **Contributors:** Soichi Hayashi
 
-## 💰 Funding
+## Funding
 
 [![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
 [![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
@@ -192,6 +192,6 @@ raw/                       per-tract .tck files and track name lists
 
 <sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-## ⚖️ License
+## License
 
 [MIT](https://github.com/brainlife/app-intersect-tract-roi/blob/master/LICENSE). MRtrix3 is distributed under its own [license](https://www.mrtrix.org/).
